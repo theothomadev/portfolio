@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: "Theo Thomas-Abeng",
+  name: "Theo Test",
   title: "Theo Thomas-Abeng | Aspiring Web Developer",
   description:
     "Portfolio of Theo Thomas-Abeng — an aspiring web developer building responsive, modern websites while continuously learning new technologies.",
