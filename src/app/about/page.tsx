@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { GraduationCap, Heart, Target, User } from "lucide-react";
+import Link from "next/link";
+import { Briefcase, ExternalLink, GraduationCap, Heart, Target, User } from "lucide-react";
 import { FadeIn, PageTransition, StaggerContainer, StaggerItem } from "@/components/motion-wrapper";
 import { SectionHeader } from "@/components/section-header";
 import { Card, CardContent } from "@/components/ui/card";
 import { createMetadata } from "@/lib/metadata";
+import { workExperience } from "@/lib/experience-data";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = createMetadata({
@@ -16,7 +18,7 @@ const aboutSections = [
   {
     icon: User,
     title: "Introduction",
-    content: `Hi, I'm ${siteConfig.name} — an aspiring web developer based in the UK with a passion for building clean, accessible, and performant websites. I combine a design-conscious mindset with a growing technical skill set to create digital experiences that feel polished and purposeful.`,
+    content: `Hi, I'm ${siteConfig.name} — a web developer based in the UK with a passion for building clean, accessible, and performant websites. I combine a design-conscious mindset with a growing technical skill set to create digital experiences that feel polished and purposeful.`,
   },
   {
     icon: GraduationCap,
@@ -55,6 +57,60 @@ export default function AboutPage() {
               title={`Hi, I'm ${siteConfig.name.split(" ")[0]}`}
               description={siteConfig.tagline}
             />
+          </FadeIn>
+
+          <FadeIn>
+            <Card className="border-border/50 bg-card/50">
+              <CardContent className="space-y-5 p-6 sm:p-8">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted">
+                    <Briefcase className="h-5 w-5 text-muted-foreground" />
+                  </div>
+                  <h2 className="text-lg font-semibold tracking-tight">
+                    Work Experience
+                  </h2>
+                </div>
+
+                {workExperience.map((entry) => (
+                  <article key={entry.company} className="space-y-4">
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div>
+                        <h3 className="text-base font-semibold">{entry.role}</h3>
+                        <p className="text-sm font-medium text-foreground/90">
+                          {entry.company}
+                        </p>
+                      </div>
+                      <p className="text-sm text-muted-foreground">{entry.period}</p>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
+                      <span>{entry.location}</span>
+                      <Link
+                        href={entry.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1 underline-offset-4 transition-colors hover:text-foreground hover:underline"
+                      >
+                        dontpanicprojects.com
+                        <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+                      </Link>
+                    </div>
+
+                    <ul className="space-y-2 text-sm leading-relaxed text-muted-foreground">
+                      {entry.highlights.map((highlight) => (
+                        <li key={highlight} className="flex gap-3">
+                          <span
+                            className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-foreground/40"
+                            aria-hidden="true"
+                          />
+                          <span>{highlight}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </article>
+                ))}
+              </CardContent>
+            </Card>
           </FadeIn>
 
           <StaggerContainer className="grid gap-6 md:grid-cols-2">

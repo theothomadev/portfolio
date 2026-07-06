@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { TypingText } from "@/components/typing-text";
 import { siteConfig } from "@/lib/site-config";
 
 export function Hero() {
@@ -34,8 +35,11 @@ export function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
+            aria-label={siteConfig.name}
           >
-            {siteConfig.name}
+            <span aria-hidden="true">
+              <TypingText text={siteConfig.name} />
+            </span>
           </motion.h1>
 
           <motion.p
