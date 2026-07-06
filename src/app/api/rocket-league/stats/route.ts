@@ -4,7 +4,11 @@ import {
   getRapidApiConfig,
   getRapidApiErrorMessage,
 } from "@/lib/rocket-league/rapidapi-client";
-import { isValidPlatform, transformTrnProfile } from "@/lib/rocket-league/transform";
+import {
+  hasPlayerStats,
+  isValidPlatform,
+  transformRapidApiProfile,
+} from "@/lib/rocket-league/transform";
 import type { PlayerStats, StatsApiError } from "@/lib/rocket-league/types";
 
 const CACHE_SECONDS = 300;
@@ -48,7 +52,7 @@ export async function GET(request: NextRequest) {
 
     if (response.status === 401 || response.status === 403) {
       return jsonError(
-        "RapidAPI rejected the request. Check that RAPIDAPI_KEY is set correctly and you are subscribed to the Rocket League Tracker API on RapidAPI.",
+        "RapidAPI rejected the request. Check that RAPIDAPI_KEY is set correctly, you are subscribed to TonyKun7's Rocket League API on RapidAPI, and RAPIDAPI_HOST is rocket-league10.p.rapidapi.com (or unset).",
         "INVALID_API_KEY",
         503
       );
@@ -68,11 +72,11 @@ export async function GET(request: NextRequest) {
       return jsonError(message, "API_ERROR", 502);
     }
 
-    if (!payload.data?.platformInfo) {
+    if (!hasPlayerStats(payload)) {
       return jsonError("Player not found.", "NOT_FOUND", 404);
     }
 
-    const stats: PlayerStats = transformTrnProfile(payload, platform, username);
+    const stats: PlayerStats = transformRapidApiProfile(payload, platform, username);
 
     return NextResponse.json(stats, {
       headers: {

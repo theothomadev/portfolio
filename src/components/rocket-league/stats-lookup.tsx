@@ -175,19 +175,21 @@ export function StatsLookup() {
               {(state.code === "MISSING_API_KEY" ||
                 state.code === "INVALID_API_KEY") && (
                 <p className="mt-2 text-sm text-muted-foreground">
-                  Subscribe to the{" "}
+                  Subscribe to{" "}
                   <a
-                    href="https://rapidapi.com/search/rocket-league-tracker"
+                    href="https://rapidapi.com/TonyKun7/api/rocket-league10"
                     className="underline underline-offset-2"
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Rocket League Tracker API
+                    TonyKun7&apos;s Rocket League API
                   </a>{" "}
                   on RapidAPI (free BASIC tier), then add{" "}
                   <code className="text-xs">RAPIDAPI_KEY</code> to{" "}
                   <code className="text-xs">.env.local</code> (local) or Vercel →
-                  Settings → Environment Variables (production), then redeploy.
+                  Settings → Environment Variables (production). Remove{" "}
+                  <code className="text-xs">RAPIDAPI_HOST</code> if it points to an
+                  old API, then redeploy.
                 </p>
               )}
             </div>
