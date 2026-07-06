@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
+import {
+  fetchPlayerProfile,
+  getRapidApiConfig,
+  getRapidApiErrorMessage,
+} from "@/lib/rocket-league/rapidapi-client";
 import { isValidPlatform, transformTrnProfile } from "@/lib/rocket-league/transform";
-import type {
-  PlayerStats,
-  StatsApiError,
-  TrnProfileResponse,
-} from "@/lib/rocket-league/types";
+import type { PlayerStats, StatsApiError } from "@/lib/rocket-league/types";
 
-const TRN_BASE_URL =
-  "https://public-api.tracker.gg/v2/rocket-league/standard/profile";
 const CACHE_SECONDS = 300;
 
 export const revalidate = 300;
@@ -28,37 +27,45 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  const apiKey = process.env.TRN_API_KEY;
-
-  if (!apiKey) {
+  if (!getRapidApiConfig()) {
     return jsonError(
-      "Tracker Network API key is not configured.",
+      "RapidAPI key is not configured. Add RAPIDAPI_KEY to your environment variables.",
       "MISSING_API_KEY",
-      500
+      503
     );
   }
 
-  const profileUrl = `${TRN_BASE_URL}/${platform}/${encodeURIComponent(username)}`;
-
   try {
-    const response = await fetch(profileUrl, {
-      headers: {
-        Accept: "application/json",
-        "TRN-Api-Key": apiKey,
-      },
-      next: { revalidate: CACHE_SECONDS },
-    });
-
-    const payload = (await response.json()) as TrnProfileResponse;
+    const { response, payload } = await fetchPlayerProfile(
+      platform,
+      username,
+      CACHE_SECONDS
+    );
 
     if (response.status === 404) {
       return jsonError("Player not found.", "NOT_FOUND", 404);
     }
 
+    if (response.status === 401 || response.status === 403) {
+      return jsonError(
+        "RapidAPI rejected the request. Check that RAPIDAPI_KEY is set correctly and you are subscribed to the Rocket League Tracker API on RapidAPI.",
+        "INVALID_API_KEY",
+        503
+      );
+    }
+
+    if (response.status === 429) {
+      return jsonError(
+        "RapidAPI rate limit reached. Try again later or upgrade your plan.",
+        "API_ERROR",
+        502
+      );
+    }
+
     if (!response.ok) {
       const message =
-        payload.errors?.[0]?.message ?? "Unable to fetch player stats.";
-      return jsonError(message, "API_ERROR", response.status);
+        getRapidApiErrorMessage(payload) ?? "Unable to fetch player stats.";
+      return jsonError(message, "API_ERROR", 502);
     }
 
     if (!payload.data?.platformInfo) {
@@ -72,9 +79,17 @@ export async function GET(request: NextRequest) {
         "Cache-Control": `public, s-maxage=${CACHE_SECONDS}, stale-while-revalidate=60`,
       },
     });
-  } catch {
+  } catch (error) {
+    if (error instanceof Error && error.message === "MISSING_API_KEY") {
+      return jsonError(
+        "RapidAPI key is not configured. Add RAPIDAPI_KEY to your environment variables.",
+        "MISSING_API_KEY",
+        503
+      );
+    }
+
     return jsonError(
-      "Unable to reach Tracker Network. Please try again.",
+      "Unable to reach RapidAPI. Please try again.",
       "API_ERROR",
       502
     );

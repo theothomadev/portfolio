@@ -166,9 +166,30 @@ export function StatsLookup() {
               <p className="font-medium text-destructive">
                 {state.code === "NOT_FOUND"
                   ? "Player not found"
-                  : "Unable to load stats"}
+                  : state.code === "MISSING_API_KEY" ||
+                      state.code === "INVALID_API_KEY"
+                    ? "API key not configured"
+                    : "Unable to load stats"}
               </p>
               <p className="mt-1 text-sm text-muted-foreground">{state.message}</p>
+              {(state.code === "MISSING_API_KEY" ||
+                state.code === "INVALID_API_KEY") && (
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Subscribe to the{" "}
+                  <a
+                    href="https://rapidapi.com/search/rocket-league-tracker"
+                    className="underline underline-offset-2"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Rocket League Tracker API
+                  </a>{" "}
+                  on RapidAPI (free BASIC tier), then add{" "}
+                  <code className="text-xs">RAPIDAPI_KEY</code> to{" "}
+                  <code className="text-xs">.env.local</code> (local) or Vercel →
+                  Settings → Environment Variables (production), then redeploy.
+                </p>
+              )}
             </div>
           </CardContent>
         </Card>

@@ -7,7 +7,7 @@ import { createMetadata } from "@/lib/metadata";
 export const metadata: Metadata = createMetadata({
   title: "Rocket League Stats",
   description:
-    "Look up Rocket League player stats by username and platform using Tracker Network.",
+    "Look up Rocket League player stats by username and platform via RapidAPI.",
   path: "/rocket-league",
 });
 

@@ -83,7 +83,8 @@ export type StatsApiErrorCode =
   | "VALIDATION_ERROR"
   | "NOT_FOUND"
   | "API_ERROR"
-  | "MISSING_API_KEY";
+  | "MISSING_API_KEY"
+  | "INVALID_API_KEY";
 
 export interface StatsApiError {
   error: string;
