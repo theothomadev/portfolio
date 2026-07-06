@@ -7,7 +7,7 @@ const STATS_PATH = "/stats";
 const PLATFORM_ALIASES: Record<Platform, string> = {
   epic: "epic",
   steam: "steam",
-  psn: "psn",
+  psn: "playstation",
   xbl: "xbox",
 };
 
