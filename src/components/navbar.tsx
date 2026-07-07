@@ -46,12 +46,27 @@ export function Navbar() {
       >
         <Link
           href="/"
+          aria-label="Home"
           className="group flex items-center gap-2 text-sm font-semibold tracking-tight transition-opacity hover:opacity-80"
         >
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-xs font-bold text-primary-foreground">
-            TT
+          <span
+            className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground"
+            aria-hidden="true"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="shrink-0"
+              aria-hidden="true"
+            >
+              <path d="M3.5 5.5H9.5V7H5.75V18.5H4.25V7H3.5V5.5ZM13.5 5.5H19.5V7H15.75V18.5H14.25V7H13.5V5.5Z" />
+            </svg>
           </span>
-          <span className="hidden sm:inline">{siteConfig.name.split(" ")[0]}</span>
+          <span className="hidden sm:inline">
+            {siteConfig.title.split(" | ")[0].split(" ")[0]}
+          </span>
         </Link>
 
         <ul className="hidden items-center gap-1 md:flex">
