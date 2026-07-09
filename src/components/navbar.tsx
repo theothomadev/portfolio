@@ -35,13 +35,14 @@ export function Navbar() {
   }, [mobileOpen]);
 
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 h-16 overflow-visible transition-all duration-300",
-        scrolled ? "glass shadow-sm" : "bg-transparent"
-      )}
-    >
-      <nav className="h-full w-full" aria-label="Main navigation">
+    <header className="fixed inset-x-0 top-0 z-50 overflow-visible">
+      <nav
+        className={cn(
+          "h-16 w-full transition-all duration-300",
+          scrolled ? "glass shadow-sm" : "bg-transparent"
+        )}
+        aria-label="Main navigation"
+      >
         <div className="container-width flex h-full items-center px-4 sm:px-6 lg:px-8">
           <div className="flex w-1/4 min-w-0 shrink items-center">
             <Link

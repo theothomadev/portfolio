@@ -128,7 +128,7 @@ export function ScrollProgressBar() {
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={0}
-      className="pointer-events-none absolute inset-x-0 bottom-0 z-[60] h-2.5 overflow-visible"
+      className="pointer-events-none absolute inset-x-0 top-full z-[60] h-2.5 overflow-visible"
     >
       <div
         ref={fillRef}
