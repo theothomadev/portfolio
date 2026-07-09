@@ -21,9 +21,9 @@ export function TypingText({
   className,
   variant = "display",
   speed = 75,
-  startDelay = 600,
+  startDelay = 0,
 }: TypingTextProps) {
-  const [displayed, setDisplayed] = useState(text);
+  const [displayed, setDisplayed] = useState("");
   const [showCursor, setShowCursor] = useState(false);
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
@@ -46,6 +46,9 @@ export function TypingText({
       setShowCursor(false);
       return clearTimers;
     }
+
+    setDisplayed("");
+    setShowCursor(startDelay > 0);
 
     const characters = [...text];
     let index = 0;

@@ -90,9 +90,8 @@ export function Hero() {
             className="w-full max-w-none"
             delay={0.1}
             aria-label={siteConfig.name}
-            initial={false}
           >
-            <TypingText text={siteConfig.name} variant="display" />
+            <TypingText text={siteConfig.name} variant="display" startDelay={0} />
           </Reveal>
 
           <Reveal as="p" className="text-xl font-medium text-muted-foreground sm:text-2xl" delay={0.2}>

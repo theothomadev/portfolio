@@ -115,3 +115,21 @@
     @apply bg-background/80 backdrop-blur-xl border border-border/50;
   }
 }
+
+@keyframes rocket-wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+.animate-rocket-wiggle {
+  animation: rocket-wiggle 0.22s ease-in-out infinite;
+  transform-origin: 30% 50%;
+}
