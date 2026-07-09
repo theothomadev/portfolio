@@ -15,15 +15,26 @@ web_environment: []
 corepack_enable: false
 nodejs_version: "22"
 disable_upload_dirs_warning: true
+upload_dirs:
+    - node_modules
+
 web_extra_daemons:
     - name: nextjs
       command: "npm run dev"
       directory: /var/www/html
+
 web_extra_exposed_ports:
     - name: nextjs
       container_port: 3000
       http_port: 80
       https_port: 443
+
+hooks:
+    post-start:
+        - exec: "npm install"
+          service: web
+        - exec: "rm -rf .next .cache && npm run build"
+          service: web
 
 # Key features of DDEV's config.yaml:
 

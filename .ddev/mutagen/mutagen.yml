@@ -1,0 +1,18 @@
+# Please do `ddev mutagen reset` after changing this file.
+sync:
+  defaults:
+    mode: "two-way-resolved"
+    stageMode: "neighboring"
+    ignore:
+      paths:
+        - "/.git"
+        - "/.tarballs"
+        - "/.ddev/db_snapshots"
+        - "/.ddev/.importdb*"
+        - ".DS_Store"
+        - ".idea"
+        - "/node_modules"
+        - "/.next"
+        - "/.cache"
+    symlink:
+      mode: "posix-raw"

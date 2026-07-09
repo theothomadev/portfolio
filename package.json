@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev -H 0.0.0.0",
+    "dev:clean": "for p in 3000 3001 3002; do lsof -ti tcp:$p | xargs kill -9 2>/dev/null; done; pkill -f 'next dev' 2>/dev/null; rm -rf .next .cache && next dev -H 0.0.0.0",
     "build": "next build",
+    "build:css": "postcss src/app/globals.css -o .cache/styles.css",
+    "watch": "postcss src/app/globals.css -o .cache/styles.css --watch",
     "start": "next start",
     "lint": "next lint"
   },
@@ -30,6 +33,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "^15.2.0",
+    "postcss-cli": "^11.0.1",
     "tailwindcss": "^4.0.6",
     "typescript": "^5"
   }

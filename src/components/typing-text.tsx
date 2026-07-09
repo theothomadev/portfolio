@@ -1,11 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import {
+  typographyClassName,
+  typographyStyle,
+  type TypographyVariant,
+} from "@/lib/typography";
 import { cn } from "@/lib/utils";
 
 interface TypingTextProps {
   text: string;
   className?: string;
+  variant?: TypographyVariant;
   speed?: number;
   startDelay?: number;
 }
@@ -13,13 +19,24 @@ interface TypingTextProps {
 export function TypingText({
   text,
   className,
+  variant = "display",
   speed = 75,
   startDelay = 600,
 }: TypingTextProps) {
-  const [displayed, setDisplayed] = useState("");
-  const [showCursor, setShowCursor] = useState(true);
+  const [displayed, setDisplayed] = useState(text);
+  const [showCursor, setShowCursor] = useState(false);
+  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   useEffect(() => {
+    let cancelled = false;
+
+    const clearTimers = () => {
+      timersRef.current.forEach(clearTimeout);
+      timersRef.current = [];
+    };
+
+    clearTimers();
+
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
@@ -27,29 +44,54 @@ export function TypingText({
     if (prefersReducedMotion) {
       setDisplayed(text);
       setShowCursor(false);
-      return;
+      return clearTimers;
     }
 
+    const characters = [...text];
     let index = 0;
-    let timeoutId: ReturnType<typeof setTimeout>;
+
+    const schedule = (callback: () => void, delay: number) => {
+      const timerId = setTimeout(callback, delay);
+      timersRef.current.push(timerId);
+    };
 
     const typeNext = () => {
-      if (index < text.length) {
-        setDisplayed(text.slice(0, index + 1));
+      if (cancelled) {
+        return;
+      }
+
+      if (index === 0) {
+        setDisplayed("");
+        setShowCursor(true);
+      }
+
+      if (index < characters.length) {
         index += 1;
-        timeoutId = setTimeout(typeNext, speed);
+        setDisplayed(characters.slice(0, index).join(""));
+        schedule(typeNext, speed);
       } else {
         setShowCursor(false);
       }
     };
 
-    timeoutId = setTimeout(typeNext, startDelay);
+    schedule(typeNext, startDelay);
 
-    return () => clearTimeout(timeoutId);
+    return () => {
+      cancelled = true;
+      clearTimers();
+    };
   }, [text, speed, startDelay]);
 
   return (
-    <span className={cn("inline", className)}>
+    <span
+      className={cn(
+        "block w-full max-w-full break-words text-balance max-sm:leading-tight",
+        "sm:inline sm:max-w-none sm:whitespace-nowrap sm:text-wrap",
+        typographyClassName(variant),
+        className
+      )}
+      style={typographyStyle(variant)}
+    >
       {displayed}
       {showCursor ? (
         <span

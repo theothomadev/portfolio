@@ -49,6 +49,7 @@ export default function RootLayout({
           defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
+          storageKey="portfolio-theme"
         >
           <a
             href="#main-content"

@@ -6,12 +6,14 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { ScrollProgressBar } from "@/components/scroll-progress-bar";
 import { Button } from "@/components/ui/button";
 import { navLinks, siteConfig } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
   const pathname = usePathname();
+  const isHome = pathname === "/";
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -40,6 +42,7 @@ export function Navbar() {
         scrolled ? "glass shadow-sm" : "bg-transparent"
       )}
     >
+      <ScrollProgressBar />
       <nav
         className="container-width flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8"
         aria-label="Main navigation"
@@ -125,7 +128,10 @@ export function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 top-16 z-40 bg-background/80 backdrop-blur-sm md:hidden"
+              className={cn(
+                "fixed inset-0 z-40 bg-background/80 backdrop-blur-sm md:hidden",
+                isHome ? "top-[4.625rem]" : "top-16"
+              )}
               onClick={() => setMobileOpen(false)}
               aria-hidden="true"
             />
@@ -134,7 +140,10 @@ export function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2 }}
-              className="glass absolute inset-x-4 top-[calc(4rem+0.5rem)] z-50 rounded-2xl p-4 shadow-lg md:hidden"
+              className={cn(
+                "glass absolute inset-x-4 z-50 rounded-2xl p-4 shadow-lg md:hidden",
+                isHome ? "top-[calc(4.625rem+0.5rem)]" : "top-[calc(4rem+0.5rem)]"
+              )}
             >
               <ul className="flex flex-col gap-1">
                 {navLinks.map((link) => {

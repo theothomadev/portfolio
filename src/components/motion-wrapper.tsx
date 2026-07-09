@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
+import { useHasMounted } from "@/hooks/use-has-mounted";
 import { cn } from "@/lib/utils";
 
 interface FadeInProps {
@@ -28,7 +29,12 @@ export function FadeIn({
   direction = "up",
   once = true,
 }: FadeInProps) {
+  const mounted = useHasMounted();
   const offset = directionOffset[direction];
+
+  if (!mounted) {
+    return <div className={className}>{children}</div>;
+  }
 
   return (
     <motion.div
@@ -43,6 +49,40 @@ export function FadeIn({
   );
 }
 
+interface RevealProps {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+  duration?: number;
+  as?: "div" | "h1" | "p";
+  "aria-label"?: string;
+  initial?: false | { opacity: number; y?: number };
+}
+
+export function Reveal({
+  children,
+  className,
+  delay = 0,
+  duration = 0.6,
+  as = "div",
+  "aria-label": ariaLabel,
+  initial = { opacity: 0, y: 24 },
+}: RevealProps) {
+  const Component = motion[as];
+
+  return (
+    <Component
+      className={className}
+      aria-label={ariaLabel}
+      initial={initial}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration, delay, ease: [0.21, 0.47, 0.32, 0.98] }}
+    >
+      {children}
+    </Component>
+  );
+}
+
 interface StaggerContainerProps {
   children: React.ReactNode;
   className?: string;
@@ -54,6 +94,8 @@ export function StaggerContainer({
   className,
   staggerDelay = 0.1,
 }: StaggerContainerProps) {
+  const mounted = useHasMounted();
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -61,6 +103,10 @@ export function StaggerContainer({
       transition: { staggerChildren: staggerDelay },
     },
   };
+
+  if (!mounted) {
+    return <div className={className}>{children}</div>;
+  }
 
   return (
     <motion.div
@@ -82,6 +128,8 @@ export function StaggerItem({
   children: React.ReactNode;
   className?: string;
 }) {
+  const mounted = useHasMounted();
+
   const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -90,6 +138,10 @@ export function StaggerItem({
       transition: { duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] },
     },
   };
+
+  if (!mounted) {
+    return <div className={className}>{children}</div>;
+  }
 
   return (
     <motion.div className={className} variants={itemVariants}>
@@ -104,6 +156,12 @@ interface PageTransitionProps {
 }
 
 export function PageTransition({ children, className }: PageTransitionProps) {
+  const mounted = useHasMounted();
+
+  if (!mounted) {
+    return <div className={cn(className)}>{children}</div>;
+  }
+
   return (
     <motion.div
       className={cn(className)}

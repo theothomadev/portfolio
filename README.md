@@ -14,21 +14,34 @@ A modern, production-ready portfolio website built with Next.js, TypeScript, Tai
 
 ## Getting Started
 
+**Use one dev server only** — running `npm run dev` on your Mac while DDEV also serves Next.js causes a corrupted `.next` cache and 500 errors on every save.
+
+### Local (Mac)
+
 ```bash
-# Install dependencies
-npm install
+npm run dev:clean   # kills stale servers, clears cache, starts fresh
+```
 
-# Run development server
-npm run dev
+Open **http://localhost:3000** — check the terminal for the exact port if 3000 was busy.
 
-# Build for production
+### DDEV
+
+```bash
+ddev mutagen reset   # once, after config changes
+ddev start           # builds Next.js before dev server starts (~20s)
+```
+
+Open **https://portfolio.ddev.site** — first start takes ~20s while it builds.
+
+Do **not** run `npm run dev` on your Mac while DDEV is running.
+
+```bash
+# Production build
 npm run build
-
-# Start production server
 npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the site.
+> **Note:** Don't run `npm run watch` alongside dev — Next.js already compiles CSS. The watch script is optional for CSS debugging only.
 
 ## Project Structure
 
