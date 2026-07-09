@@ -9,7 +9,7 @@ import { siteConfig } from "@/lib/site-config";
 
 export function Hero() {
   return (
-    <section className="relative flex min-h-[90vh] items-center overflow-x-hidden">
+    <section className="header-offset relative flex min-h-[90vh] items-center overflow-x-hidden">
       {/* Gaming-inspired background */}
       <div
         className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
@@ -77,7 +77,7 @@ export function Hero() {
         <div className="absolute left-1/2 top-1/2 h-[420px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#6495ED] opacity-[0.08] blur-3xl" />
       </div>
 
-      <div className="container-width section-padding w-full !pb-16 !pt-32 sm:!pt-36">
+      <div className="container-width section-padding w-full !pb-16 !pt-0">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center space-y-8 text-center">
           <Reveal delay={0}>
             <span className="inline-flex items-center rounded-full border border-border/50 bg-muted/50 px-4 py-1.5 text-sm text-muted-foreground">

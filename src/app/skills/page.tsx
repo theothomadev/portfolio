@@ -15,7 +15,7 @@ export const metadata: Metadata = createMetadata({
 export default function SkillsPage() {
   return (
     <PageTransition>
-      <div className="section-padding !pt-28 sm:!pt-32">
+      <div className="section-padding header-offset">
         <div className="container-width space-y-16">
           <FadeIn>
             <SectionHeader

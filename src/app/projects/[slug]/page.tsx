@@ -45,7 +45,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <PageTransition>
-      <article className="section-padding !pt-28 sm:!pt-32">
+      <article className="section-padding header-offset">
         <div className="container-width space-y-12">
           <FadeIn>
             <Button variant="ghost" size="sm" asChild className="-ml-2">

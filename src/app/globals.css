@@ -107,6 +107,11 @@
     @apply mx-auto max-w-6xl;
   }
 
+  /** Clears the fixed h-16 navbar; progress bar overlays content below it */
+  .header-offset {
+    @apply !pt-16;
+  }
+
   .gradient-text {
     @apply bg-gradient-to-r from-foreground via-foreground/80 to-muted-foreground bg-clip-text text-transparent;
   }

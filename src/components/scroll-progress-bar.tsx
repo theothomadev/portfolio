@@ -37,13 +37,48 @@ function ProgressRocket({
   );
 }
 
+function getScrollProgress() {
+  const scrollTop = window.scrollY;
+  const maxScroll =
+    document.documentElement.scrollHeight - window.innerHeight;
+
+  return maxScroll > 0 ? Math.min(1, Math.max(0, scrollTop / maxScroll)) : 0;
+}
+
 export function ScrollProgressBar() {
   const pathname = usePathname();
-  const [progress, setProgress] = useState(0);
-  const [isMoving, setIsMoving] = useState(false);
+  const barRef = useRef<HTMLDivElement>(null);
+  const fillRef = useRef<HTMLDivElement>(null);
+  const rocketRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
+  const progressRef = useRef(0);
   const movingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [isMoving, setIsMoving] = useState(false);
 
   useEffect(() => {
+    const applyProgress = (progress: number) => {
+      progressRef.current = progress;
+
+      if (fillRef.current) {
+        fillRef.current.style.transform = `scaleX(${progress})`;
+      }
+
+      if (rocketRef.current && barRef.current) {
+        const barWidth = barRef.current.offsetWidth;
+        const rocketX = progress * barWidth - ROCKET_FILL_OVERLAP_PX;
+
+        rocketRef.current.style.transform = `translate3d(${rocketX}px, -50%, 0)`;
+        rocketRef.current.style.opacity = progress > 0 ? "1" : "0";
+      }
+
+      if (barRef.current) {
+        barRef.current.setAttribute(
+          "aria-valuenow",
+          String(Math.round(progress * 100))
+        );
+      }
+    };
+
     const markMoving = () => {
       setIsMoving(true);
       if (movingTimeoutRef.current) {
@@ -53,23 +88,32 @@ export function ScrollProgressBar() {
     };
 
     const updateProgress = () => {
-      const scrollTop = document.documentElement.scrollTop;
-      const maxScroll =
-        document.documentElement.scrollHeight - window.innerHeight;
+      if (rafRef.current !== null) {
+        return;
+      }
 
-      setProgress(
-        maxScroll > 0 ? Math.min(1, Math.max(0, scrollTop / maxScroll)) : 0
-      );
-      markMoving();
+      rafRef.current = window.requestAnimationFrame(() => {
+        rafRef.current = null;
+        applyProgress(getScrollProgress());
+        markMoving();
+      });
     };
 
-    updateProgress();
+    applyProgress(getScrollProgress());
+
     window.addEventListener("scroll", updateProgress, { passive: true });
     window.addEventListener("resize", updateProgress, { passive: true });
+    window.visualViewport?.addEventListener("resize", updateProgress);
+    window.visualViewport?.addEventListener("scroll", updateProgress);
 
     return () => {
       window.removeEventListener("scroll", updateProgress);
       window.removeEventListener("resize", updateProgress);
+      window.visualViewport?.removeEventListener("resize", updateProgress);
+      window.visualViewport?.removeEventListener("scroll", updateProgress);
+      if (rafRef.current !== null) {
+        window.cancelAnimationFrame(rafRef.current);
+      }
       if (movingTimeoutRef.current) {
         clearTimeout(movingTimeoutRef.current);
       }
@@ -77,26 +121,26 @@ export function ScrollProgressBar() {
   }, [pathname]);
 
   return (
-    <div className="relative h-2.5 w-full shrink-0 overflow-visible">
-      <div
-        className="h-2.5 w-full overflow-hidden bg-[#ADD8E6]/60 dark:bg-[#0F52BA]/40"
-        role="progressbar"
-        aria-label="Page scroll progress"
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(progress * 100)}
-      >
+    <div
+      ref={barRef}
+      role="progressbar"
+      aria-label="Page scroll progress"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={0}
+      className="pointer-events-none fixed inset-x-0 top-16 z-[60] h-2.5 overflow-visible"
+    >
+      <div className="h-2.5 w-full overflow-hidden bg-[#ADD8E6]/60 dark:bg-[#0F52BA]/40">
         <div
-          className="h-full bg-[#6495ED] shadow-[0_0_14px_rgba(100,149,237,0.85)] transition-[width] duration-150 ease-out dark:bg-[#ADD8E6] dark:shadow-[0_0_14px_rgba(173,216,230,0.7)]"
-          style={{ width: `${progress * 100}%` }}
+          ref={fillRef}
+          className="h-full w-full origin-left bg-[#6495ED] shadow-[0_0_14px_rgba(100,149,237,0.85)] will-change-transform dark:bg-[#ADD8E6] dark:shadow-[0_0_14px_rgba(173,216,230,0.7)]"
+          style={{ transform: "scaleX(0)" }}
         />
       </div>
       <div
-        className="pointer-events-none absolute top-1/2 z-10 h-8 w-8 -translate-y-1/2 transition-[left,opacity] duration-150 ease-out"
-        style={{
-          left: `calc(${progress * 100}% - ${ROCKET_FILL_OVERLAP_PX}px)`,
-          opacity: progress > 0 ? 1 : 0,
-        }}
+        ref={rocketRef}
+        className="absolute left-0 top-1/2 h-8 w-8 will-change-transform"
+        style={{ transform: "translate3d(0, -50%, 0)", opacity: 0 }}
         aria-hidden="true"
       >
         <ProgressRocket wiggle={isMoving} />

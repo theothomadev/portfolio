@@ -37,7 +37,7 @@ const socialLinks = [
 export default function ContactPage() {
   return (
     <PageTransition>
-      <div className="section-padding !pt-28 sm:!pt-32">
+      <div className="section-padding header-offset">
         <div className="container-width">
           <div className="grid gap-16 lg:grid-cols-2 lg:gap-20">
             <div className="space-y-10">

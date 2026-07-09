@@ -37,14 +37,11 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 flex flex-col transition-all duration-300",
+        "fixed inset-x-0 top-0 z-50 h-16 overflow-visible transition-all duration-300",
         scrolled ? "glass shadow-sm" : "bg-transparent"
       )}
     >
-      <nav
-        className="h-16 w-full shrink-0"
-        aria-label="Main navigation"
-      >
+      <nav className="h-full w-full" aria-label="Main navigation">
         <div className="container-width flex h-full items-center px-4 sm:px-6 lg:px-8">
           <div className="flex w-1/4 min-w-0 shrink items-center">
             <Link
@@ -136,7 +133,7 @@ export function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm top-[4.625rem] md:hidden"
+              className="fixed inset-0 top-16 z-40 bg-background/80 backdrop-blur-sm md:hidden"
               onClick={() => setMobileOpen(false)}
               aria-hidden="true"
             />
@@ -145,7 +142,7 @@ export function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2 }}
-              className="glass absolute inset-x-4 top-[calc(4.625rem+0.5rem)] z-50 rounded-2xl p-4 shadow-lg md:hidden"
+              className="glass absolute inset-x-4 top-[calc(4rem+0.5rem)] z-50 rounded-2xl p-4 shadow-lg md:hidden"
             >
               <ul className="flex flex-col gap-1">
                 {navLinks.map((link) => {
