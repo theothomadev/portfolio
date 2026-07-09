@@ -37,6 +37,7 @@ function SkillIconBackdrop({ skillName }: { skillName: string }) {
         )}
       >
         <Icon
+          aria-label={`${skillName} icon`}
           className={cn(
             "h-[5.75rem] w-[5.75rem] opacity-[0.12] transition-[opacity,filter] duration-500 ease-out",
             "group-hover:opacity-[0.38] group-hover:drop-shadow-[0_0_18px_currentColor]",
@@ -55,6 +56,7 @@ function SkillIconBackdrop({ skillName }: { skillName: string }) {
 export function SkillCard({ skill, className }: SkillCardProps) {
   return (
     <Card
+      data-skill-card
       className={cn(
         "group relative overflow-hidden border-border/50 bg-card/50 transition-all duration-300 hover:border-border hover:shadow-md hover:shadow-black/5 dark:hover:shadow-black/20",
         className

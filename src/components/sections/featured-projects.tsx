@@ -22,7 +22,7 @@ export function FeaturedProjects() {
             <Button variant="outline" asChild className="shrink-0">
               <Link href="/projects">
                 View all projects
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </Button>
           </div>

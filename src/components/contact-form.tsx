@@ -94,7 +94,10 @@ export function ContactForm({ className }: ContactFormProps) {
         aria-live="polite"
       >
         <div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/10">
-          <CheckCircle2 className="h-7 w-7 text-emerald-500" />
+          <CheckCircle2
+            className="h-7 w-7 text-emerald-500"
+            aria-label="Message sent successfully"
+          />
         </div>
         <div className="space-y-2">
           <h3 className="text-xl font-semibold">Message sent!</h3>
@@ -174,12 +177,12 @@ export function ContactForm({ className }: ContactFormProps) {
       <Button type="submit" size="lg" className="w-full sm:w-auto" disabled={status === "submitting"}>
         {status === "submitting" ? (
           <>
-            <Loader2 className="h-4 w-4 animate-spin" />
+            <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
             Sending...
           </>
         ) : (
           <>
-            <Send className="h-4 w-4" />
+            <Send className="h-4 w-4" aria-hidden="true" />
             Send Message
           </>
         )}

@@ -50,7 +50,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <FadeIn>
             <Button variant="ghost" size="sm" asChild className="-ml-2">
               <Link href="/projects">
-                <ArrowLeft className="h-4 w-4" />
+                <ArrowLeft className="h-4 w-4" aria-hidden="true" />
                 Back to projects
               </Link>
             </Button>
@@ -85,7 +85,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     rel="noopener noreferrer"
                   >
                     Live Demo
-                    <ArrowUpRight className="h-4 w-4" />
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                   </a>
                 </Button>
                 <Button variant="outline" asChild>
@@ -94,7 +94,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <Github className="h-4 w-4" />
+                    <Github className="h-4 w-4" aria-hidden="true" />
                     View on GitHub
                   </a>
                 </Button>
@@ -120,7 +120,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               <CardContent className="space-y-4 p-8">
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/10">
-                    <Lightbulb className="h-5 w-5 text-amber-500" />
+                    <Lightbulb
+                      className="h-5 w-5 text-amber-500"
+                      aria-label="Lessons learned icon"
+                    />
                   </div>
                   <h2 className="text-xl font-semibold tracking-tight">
                     Lessons Learned

@@ -51,7 +51,10 @@ export function ProjectCard({
               className="group/title inline-flex items-center gap-1.5 text-lg font-semibold tracking-tight transition-colors hover:text-muted-foreground"
             >
               {project.title}
-              <ArrowUpRight className="h-4 w-4 opacity-0 transition-all group-hover/title:opacity-100" />
+              <ArrowUpRight
+                className="h-4 w-4 opacity-0 transition-all group-hover/title:opacity-100"
+                aria-hidden="true"
+              />
             </Link>
             <p className="text-sm text-muted-foreground">{project.year}</p>
           </div>
@@ -76,7 +79,7 @@ export function ProjectCard({
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Github className="h-3.5 w-3.5" />
+              <Github className="h-3.5 w-3.5" aria-hidden="true" />
               GitHub
             </a>
           </Button>
@@ -87,7 +90,7 @@ export function ProjectCard({
               rel="noopener noreferrer"
             >
               Live Demo
-              <ArrowUpRight className="h-3.5 w-3.5" />
+              <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
             </a>
           </Button>
         </div>

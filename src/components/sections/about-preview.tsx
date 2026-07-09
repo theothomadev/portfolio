@@ -33,7 +33,7 @@ export function AboutPreview() {
               <Button variant="outline" asChild>
                 <Link href="/about">
                   Learn more about me
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
               </Button>
             </div>

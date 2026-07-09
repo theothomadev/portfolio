@@ -25,7 +25,8 @@ function ProgressRocket({
         wiggle && "animate-rocket-wiggle",
         className
       )}
-      aria-hidden="true"
+      aria-label="Rocket scroll indicator"
+      role="img"
     >
       <g transform={`rotate(90 ${ROCKET_VIEWBOX_CENTER} ${ROCKET_VIEWBOX_CENTER})`}>
         <path d="M6.188,29.909c0.156,0.42,0.54,0.713,0.986,0.752c0.446,0.04,0.876-0.18,1.105-0.566c0.676-1.144,1.726-2.43,3.231-3.029c-1.354-2.993-2.159-5.658-2.635-7.826C7.083,20.553,3.939,23.87,6.188,29.909z" />

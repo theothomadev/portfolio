@@ -134,12 +134,12 @@ export function StatsLookup() {
               <Button type="submit" disabled={state.status === "loading"} className="w-full sm:w-auto">
                 {state.status === "loading" ? (
                   <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
                     Searching...
                   </>
                 ) : (
                   <>
-                    <Search className="h-4 w-4" />
+                    <Search className="h-4 w-4" aria-hidden="true" />
                     Search
                   </>
                 )}
@@ -152,7 +152,7 @@ export function StatsLookup() {
       {state.status === "loading" && (
         <Card className="border-border/50 bg-card/50">
           <CardContent className="flex items-center justify-center gap-3 py-16 text-muted-foreground">
-            <Loader2 className="h-5 w-5 animate-spin" />
+            <Loader2 className="h-5 w-5 animate-spin" aria-hidden="true" />
             Fetching player stats...
           </CardContent>
         </Card>
@@ -161,7 +161,10 @@ export function StatsLookup() {
       {state.status === "error" && (
         <Card className="border-destructive/30 bg-destructive/5">
           <CardContent className="flex items-start gap-3 py-6">
-            <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-destructive" />
+            <AlertCircle
+              className="mt-0.5 h-5 w-5 shrink-0 text-destructive"
+              aria-label="Error"
+            />
             <div>
               <p className="font-medium text-destructive">
                 {state.code === "NOT_FOUND"
@@ -210,7 +213,10 @@ export function StatsLookup() {
                     className="h-full w-full object-cover"
                   />
                 ) : (
-                  <UserRound className="h-10 w-10 text-muted-foreground" />
+                  <UserRound
+                    className="h-10 w-10 text-muted-foreground"
+                    aria-label="Default player avatar"
+                  />
                 )}
               </div>
 
@@ -271,7 +277,13 @@ export function StatsLookup() {
                           // eslint-disable-next-line @next/next/no-img-element
                           <img
                             src={playlist.rankIconUrl}
-                            alt=""
+                            alt={
+                              [playlist.tier, playlist.division]
+                                .filter(Boolean)
+                                .join(" ")
+                                ? `${[playlist.tier, playlist.division].filter(Boolean).join(" ")} rank icon`
+                                : `${playlist.name} rank icon`
+                            }
                             className="h-10 w-10 object-contain"
                           />
                         ) : null}

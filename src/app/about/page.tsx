@@ -64,7 +64,10 @@ export default function AboutPage() {
               <CardContent className="space-y-5 p-6 sm:p-8">
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted">
-                    <Briefcase className="h-5 w-5 text-muted-foreground" />
+                    <Briefcase
+                      className="h-5 w-5 text-muted-foreground"
+                      aria-label="Work experience icon"
+                    />
                   </div>
                   <h2 className="text-lg font-semibold tracking-tight">
                     Work Experience
@@ -120,7 +123,10 @@ export default function AboutPage() {
                   <CardContent className="space-y-4 p-6">
                     <div className="flex items-center gap-3">
                       <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted">
-                        <section.icon className="h-5 w-5 text-muted-foreground" />
+                        <section.icon
+                          className="h-5 w-5 text-muted-foreground"
+                          aria-label={`${section.title} icon`}
+                        />
                       </div>
                       <h2 className="text-lg font-semibold tracking-tight">
                         {section.title}

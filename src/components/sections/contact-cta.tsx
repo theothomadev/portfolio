@@ -27,12 +27,12 @@ export function ContactCTA() {
                 <Button size="lg" asChild>
                   <Link href="/contact">
                     Get in touch
-                    <ArrowRight className="h-4 w-4" />
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                 </Button>
                 <Button size="lg" variant="outline" asChild>
                   <a href={`mailto:${siteConfig.email}`}>
-                    <Mail className="h-4 w-4" />
+                    <Mail className="h-4 w-4" aria-hidden="true" />
                     {siteConfig.email}
                   </a>
                 </Button>

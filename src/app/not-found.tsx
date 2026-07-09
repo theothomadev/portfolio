@@ -16,7 +16,7 @@ export default function NotFound() {
       </p>
       <Button className="mt-8" asChild>
         <Link href="/">
-          <ArrowLeft className="h-4 w-4" />
+          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
           Back to home
         </Link>
       </Button>

@@ -60,7 +60,8 @@ export function Navbar() {
                   viewBox="0 0 24 24"
                   fill="currentColor"
                   className="shrink-0"
-                  aria-hidden="true"
+                  aria-label="Site logo monogram"
+                  role="img"
                 >
                   <path d="M3.5 5.5H9.5V7H5.75V18.5H4.25V7H3.5V5.5ZM13.5 5.5H19.5V7H15.75V18.5H14.25V7H13.5V5.5Z" />
                 </svg>
@@ -118,7 +119,11 @@ export function Navbar() {
               aria-expanded={mobileOpen}
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
             >
-              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {mobileOpen ? (
+                <X className="h-5 w-5" aria-hidden="true" />
+              ) : (
+                <Menu className="h-5 w-5" aria-hidden="true" />
+              )}
             </Button>
           </div>
         </div>

@@ -138,3 +138,26 @@
   animation: rocket-wiggle 0.22s ease-in-out infinite;
   transform-origin: 30% 50%;
 }
+
+@keyframes skills-tech-icon-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+.skills-tech-icon-pulse {
+  animation: skills-tech-icon-pulse var(--pulse-duration, 3.5s) ease-in-out infinite;
+  animation-delay: var(--pulse-delay, 0s);
+  transform-origin: center center;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skills-tech-icon-pulse {
+    animation: none;
+  }
+}

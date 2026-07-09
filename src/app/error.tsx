@@ -31,7 +31,7 @@ export default function Error({
         <Button onClick={reset}>Try again</Button>
         <Button variant="outline" asChild>
           <Link href="/">
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             Back to home
           </Link>
         </Button>

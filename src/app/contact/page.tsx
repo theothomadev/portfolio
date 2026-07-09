@@ -60,7 +60,10 @@ export default function ContactPage() {
                       className="group flex items-center gap-4 rounded-2xl border border-border/50 bg-card/50 p-5 transition-all hover:border-border hover:shadow-md"
                     >
                       <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-muted transition-colors group-hover:bg-accent">
-                        <Icon className="h-5 w-5 text-muted-foreground" />
+                        <Icon
+                          className="h-5 w-5 text-muted-foreground"
+                          aria-label={`${label} icon`}
+                        />
                       </div>
                       <div>
                         <p className="font-medium">{label}</p>
@@ -76,7 +79,7 @@ export default function ContactPage() {
               <FadeIn delay={0.25}>
                 <Button size="lg" asChild>
                   <a href={`mailto:${siteConfig.email}`}>
-                    <Mail className="h-4 w-4" />
+                    <Mail className="h-4 w-4" aria-hidden="true" />
                     Email me directly
                   </a>
                 </Button>
