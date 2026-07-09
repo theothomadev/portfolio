@@ -9,7 +9,7 @@ import { siteConfig } from "@/lib/site-config";
 
 export function Hero() {
   return (
-    <section className="header-offset relative flex min-h-[90vh] items-center overflow-x-hidden">
+    <section className="relative flex min-h-[90vh] items-center overflow-x-hidden">
       {/* Gaming-inspired background */}
       <div
         className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"

@@ -128,15 +128,13 @@ export function ScrollProgressBar() {
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={0}
-      className="pointer-events-none fixed inset-x-0 top-16 z-[60] h-2.5 overflow-visible"
+      className="pointer-events-none absolute inset-x-0 bottom-0 z-[60] h-2.5 overflow-visible"
     >
-      <div className="h-2.5 w-full overflow-hidden bg-[#ADD8E6]/60 dark:bg-[#0F52BA]/40">
-        <div
-          ref={fillRef}
-          className="h-full w-full origin-left bg-[#6495ED] shadow-[0_0_14px_rgba(100,149,237,0.85)] will-change-transform dark:bg-[#ADD8E6] dark:shadow-[0_0_14px_rgba(173,216,230,0.7)]"
-          style={{ transform: "scaleX(0)" }}
-        />
-      </div>
+      <div
+        ref={fillRef}
+        className="h-2.5 w-full origin-left bg-[#6495ED] shadow-[0_0_14px_rgba(100,149,237,0.85)] will-change-transform dark:bg-[#ADD8E6] dark:shadow-[0_0_14px_rgba(173,216,230,0.7)]"
+        style={{ transform: "scaleX(0)" }}
+      />
       <div
         ref={rocketRef}
         className="absolute left-0 top-1/2 h-8 w-8 will-change-transform"
