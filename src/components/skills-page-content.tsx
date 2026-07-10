@@ -278,7 +278,7 @@ export function SkillsPageContent() {
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {category.skills.map((skill) => (
-                <SkillCard key={skill.name} skill={skill} />
+                <SkillCard key={skill.name} skill={skill} showProjectExample />
               ))}
             </div>
           </section>
