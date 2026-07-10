@@ -25,27 +25,58 @@ interface SkillsPageBackgroundProps {
   pageRef: RefObject<HTMLElement | null>;
 }
 
+interface ForbiddenPadding {
+  top?: number;
+  right?: number;
+  bottom?: number;
+  left?: number;
+}
+
+const FORBIDDEN_SELECTORS: { selector: string; padding: ForbiddenPadding }[] = [
+  {
+    selector: "[data-skills-intro]",
+    padding: { bottom: 48, left: 8, right: 8 },
+  },
+  {
+    selector: "[data-skills-filter-panel]",
+    padding: { top: 12, bottom: 40, left: 12, right: 12 },
+  },
+  {
+    selector: "[data-skills-category-heading]",
+    padding: { top: 16, bottom: 24, left: 8, right: 8 },
+  },
+  {
+    selector: "[data-skill-card]",
+    padding: { top: 20, right: 20, bottom: 20, left: 20 },
+  },
+  {
+    selector: "[data-skills-bottom-spacer]",
+    padding: { top: 24 },
+  },
+  {
+    selector: "[data-skills-search-empty]",
+    padding: { top: 16, bottom: 16, left: 12, right: 12 },
+  },
+];
+
 function collectForbiddenRects(container: HTMLElement): LayoutRect[] {
   const containerRect = container.getBoundingClientRect();
-  const selectors = [
-    "[data-skill-card]",
-    "[data-skills-intro]",
-    "[data-skills-category-heading]",
-  ];
 
-  const elements = selectors.flatMap((selector) =>
-    Array.from(container.querySelectorAll<HTMLElement>(selector))
+  return FORBIDDEN_SELECTORS.flatMap(({ selector, padding }) =>
+    Array.from(container.querySelectorAll<HTMLElement>(selector)).map(
+      (element) => {
+        const rect = element.getBoundingClientRect();
+        return {
+          top: rect.top - containerRect.top - (padding.top ?? 0),
+          left: rect.left - containerRect.left - (padding.left ?? 0),
+          width:
+            rect.width + (padding.left ?? 0) + (padding.right ?? 0),
+          height:
+            rect.height + (padding.top ?? 0) + (padding.bottom ?? 0),
+        };
+      }
+    )
   );
-
-  return elements.map((element) => {
-    const rect = element.getBoundingClientRect();
-    return {
-      top: rect.top - containerRect.top,
-      left: rect.left - containerRect.left,
-      width: rect.width,
-      height: rect.height,
-    };
-  });
 }
 
 export function SkillsPageBackground({ pageRef }: SkillsPageBackgroundProps) {
@@ -97,7 +128,7 @@ export function SkillsPageBackground({ pageRef }: SkillsPageBackgroundProps) {
       childList: true,
       subtree: true,
       attributes: true,
-      attributeFilter: ["class", "style"],
+      attributeFilter: ["class", "style", "hidden"],
     });
 
     window.addEventListener("resize", scheduleUpdate);

@@ -55,10 +55,12 @@ export interface LayoutRect {
 }
 
 const EDGE_MARGIN_PX = 24;
-const ICON_GAP_PX = 14;
-const CARD_PADDING_PX = 12;
+const ICON_GAP_PX = 16;
+const CARD_PADDING_PX = 20;
 const PLACEMENT_ATTEMPTS = 160;
 const GRID_STEP_PX = 44;
+/** Extra clearance below the intro / filter block before icons may appear */
+const INTRO_BOTTOM_CLEARANCE_PX = 40;
 /** Max scale during pulse — collision bounds must include this headroom */
 export const SKILLS_ICON_PULSE_SCALE = 1.06;
 
@@ -333,7 +335,7 @@ export function computeSkillsTechIconPlacements(
       : containerHeight * 0.5;
 
   const bottomMinY = Math.min(
-    Math.max(lastObstacleBottom + 24, containerHeight * 0.45),
+    Math.max(lastObstacleBottom + INTRO_BOTTOM_CLEARANCE_PX, containerHeight * 0.45),
     containerHeight - EDGE_MARGIN_PX - 40
   );
 
@@ -359,25 +361,28 @@ export function computeSkillsTechIconPlacements(
     );
   }
 
-  // Phase 4 — extra random attempts biased to lower half
-  for (let index = 0; index < pool.length; index += 1) {
-    const file = pool[index];
+  // Phase 4 — random fill only below the lowest content block (never mid-page)
+  const lowerStart = lastObstacleBottom + INTRO_BOTTOM_CLEARANCE_PX;
 
-    for (let attempt = 0; attempt < 80; attempt += 1) {
-      const seed = `lower-${file}-${index}-${attempt}`;
-      const centerX = range(`${seed}-x`, minX, maxX);
-      const lowerStart = containerHeight * 0.38;
-      const centerY = range(`${seed}-y`, lowerStart, maxY);
+  if (lowerStart < maxY) {
+    for (let index = 0; index < pool.length; index += 1) {
+      const file = pool[index];
 
-      placeFromPool(
-        file,
-        `${file}-l-${index}-${attempt}`,
-        seed,
-        30,
-        56,
-        centerX,
-        centerY
-      );
+      for (let attempt = 0; attempt < 80; attempt += 1) {
+        const seed = `lower-${file}-${index}-${attempt}`;
+        const centerX = range(`${seed}-x`, minX, maxX);
+        const centerY = range(`${seed}-y`, lowerStart, maxY);
+
+        placeFromPool(
+          file,
+          `${file}-l-${index}-${attempt}`,
+          seed,
+          30,
+          56,
+          centerX,
+          centerY
+        );
+      }
     }
   }
 
