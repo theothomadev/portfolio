@@ -1,9 +1,12 @@
 import type { IconType } from "react-icons";
 import { VscVscode } from "react-icons/vsc";
 import {
+  SiAriakit,
+  SiBootstrap,
   SiCss,
   SiExpress,
   SiFigma,
+  SiFramer,
   SiGit,
   SiGithub,
   SiHtml5,
@@ -32,6 +35,9 @@ export const skillIcons: Record<string, IconType> = {
   GitHub: SiGithub,
   "VS Code": VscVscode,
   Figma: SiFigma,
+  "UI/UX Design": SiFramer,
+  "Responsive Design": SiBootstrap,
+  Accessibility: SiAriakit,
   Vercel: SiVercel,
 };
 
@@ -50,6 +56,9 @@ export const skillIconColors: Record<string, string> = {
   GitHub: "#FFFFFF",
   "VS Code": "#007ACC",
   Figma: "#F24E1E",
+  "UI/UX Design": "#0055FF",
+  "Responsive Design": "#7952B3",
+  Accessibility: "#007ACC",
   Vercel: "#FFFFFF",
 };
 

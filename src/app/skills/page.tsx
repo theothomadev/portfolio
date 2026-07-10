@@ -9,7 +9,7 @@ import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = createMetadata({
   title: "Skills",
-  description: `Explore the technical skills and tools ${siteConfig.name} uses — frontend, backend, and development workflow.`,
+  description: `Explore the technical skills and tools ${siteConfig.name} uses — frontend, backend, design, and development workflow.`,
   path: "/skills",
 });
 
@@ -17,7 +17,7 @@ export default function SkillsPage() {
   return (
     <PageTransition>
       <SkillsPageShell>
-        <div className="section-padding header-offset pb-28 sm:pb-36">
+        <div className="section-padding header-offset pb-32 sm:pb-44">
           <div className="container-width space-y-16">
             <FadeIn>
               <div data-skills-intro>

@@ -92,10 +92,19 @@ export function SkillsPageBackground({ pageRef }: SkillsPageBackgroundProps) {
     const resizeObserver = new ResizeObserver(scheduleUpdate);
     resizeObserver.observe(container);
 
+    const mutationObserver = new MutationObserver(scheduleUpdate);
+    mutationObserver.observe(container, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["class", "style"],
+    });
+
     window.addEventListener("resize", scheduleUpdate);
 
     return () => {
       resizeObserver.disconnect();
+      mutationObserver.disconnect();
       window.removeEventListener("resize", scheduleUpdate);
       if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current);

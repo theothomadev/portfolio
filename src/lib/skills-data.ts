@@ -74,6 +74,32 @@ export const skillCategories: SkillCategory[] = [
     ],
   },
   {
+    title: "Design",
+    description: "User-centred interfaces, visual design, and inclusive experiences",
+    skills: [
+      {
+        name: "Figma",
+        description: "UI design, prototyping, and design handoff",
+        level: "intermediate",
+      },
+      {
+        name: "UI/UX Design",
+        description: "Layout, typography, and user-centred interface design",
+        level: "intermediate",
+      },
+      {
+        name: "Responsive Design",
+        description: "Fluid layouts that work across screen sizes and devices",
+        level: "proficient",
+      },
+      {
+        name: "Accessibility",
+        description: "Inclusive design with semantic markup and WCAG awareness",
+        level: "learning",
+      },
+    ],
+  },
+  {
     title: "Tools",
     description: "Development workflow and collaboration",
     skills: [
@@ -91,11 +117,6 @@ export const skillCategories: SkillCategory[] = [
         name: "VS Code",
         description: "Primary code editor with extensions",
         level: "proficient",
-      },
-      {
-        name: "Figma",
-        description: "UI/UX design and prototyping",
-        level: "learning",
       },
       {
         name: "Vercel",
